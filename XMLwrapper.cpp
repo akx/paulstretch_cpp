@@ -410,7 +410,7 @@ void XMLwrapper::getparstr(const char *name,char *par,int maxstrlen){
     if (mxmlGetFirstChild(node) == NULL) return;
     if (mxmlGetType(mxmlGetFirstChild(node)) != MXML_OPAQUE) return;
     
-    snprintf(par,maxstrlen,"%s",mxmlGetText(mxmlGetFirstChild(node), NULL));
+    snprintf(par,maxstrlen,"%s",mxmlGetElement(mxmlGetFirstChild(node)));
     
 };
 
