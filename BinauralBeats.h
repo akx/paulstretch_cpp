@@ -36,7 +36,7 @@ class AP{//allpass
 
 			return out;
 		};
-		REALTYPE set(REALTYPE a_){
+		void set(REALTYPE a_){
 			a=a_*a_;
 		};
 	private:
