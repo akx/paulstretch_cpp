@@ -1,0 +1,6 @@
+/bin
+/build
+FreeEditUI.cxx
+FreeEditUI.h
+GUI.cxx
+GUI.h
