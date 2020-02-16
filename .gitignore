@@ -1,3 +1,4 @@
+*.dmg
 /bin
 /build
 FreeEditUI.cxx
