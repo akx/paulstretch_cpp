@@ -1,0 +1,46 @@
+name: Make app
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: install homebrew deps
+      run: brew install audiofile fftw fltk libmxml libogg libsamplerate libvorbis mad portaudio
+      if: runner.os == 'macOS'
+    - uses: actions/checkout@v2
+    - name: install apt deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends fluid libaudiofile-dev libfftw3-dev libfltk1.3-dev libmad0-dev libmxml-dev libogg-dev libsamplerate0-dev libvorbis-dev portaudio19-dev
+      if: runner.os == 'Linux'
+    - name: make
+      run: make
+    - uses: actions/upload-artifact@v1
+      with:
+        name: binary-${{ runner.os }}
+        path: bin
+    # -- bundling
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.7'
+      if: runner.os == 'macOS'
+    - name: install appify and dmgbuild
+      run: pip install dmgbuild -e git+https://github.com/akx/appify.git#egg=appify
+      if: runner.os == 'macOS'
+    - name: bundle app and create DMG
+      run: |
+        appify --executable=./bin/paulstretch --bundle=./bundle/Paulstretch.app --icon-png ./icon/icon.png
+        mkdir ./dmg
+        dmgbuild -s .github/workflows/dmgbuild_settings.py -D app=./bundle/Paulstretch.app "Paulstretch" ./dmg/Paulstretch.dmg
+      if: runner.os == 'macOS'
+    - uses: actions/upload-artifact@v1
+      with:
+        name: dmg-${{ runner.os }}
+        path: dmg
+      if: runner.os == 'macOS'
