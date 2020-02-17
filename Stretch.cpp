@@ -331,9 +331,7 @@ REALTYPE Stretch::process(REALTYPE *smps,int nsmps){
 			r-=credit_get;
 		};
 
-		long double old_remained_samples_test=remained_samples;
 		remained_samples+=r;
-		int result=0;
 		if (remained_samples>=1.0){
 			skip_samples=(int)(floor(remained_samples-1.0)*bufsize);
 			remained_samples=remained_samples-floor(remained_samples);

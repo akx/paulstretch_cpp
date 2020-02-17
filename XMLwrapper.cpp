@@ -299,7 +299,6 @@ char *XMLwrapper::doloadfile(const char *filename){
 	gzclose(gzfile);
 	return (xmldata);
     } else {//this is not a gzip file
-	notgzip:    
 	FILE *file=fopen(filename,"rb");
 	if (file==NULL) return(NULL);
 	fseek(file,0,SEEK_END);
@@ -309,7 +308,7 @@ char *XMLwrapper::doloadfile(const char *filename){
 	ZERO(xmldata,filesize+1);
 	
 	rewind(file);
-	int tmp=fread(xmldata,filesize,1,file);
+	fread(xmldata,filesize,1,file);
 	
 	fclose(file);
 	return(xmldata);
