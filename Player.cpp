@@ -218,7 +218,7 @@ void Player::getaudiobuffer(int nsamples, float *out){
 
 
 void Player::run(){
-	while(1){
+	while(!stopnow) {
 		newtaskcheck();
 
 		if (mode==MODE_STOP) sleep(10);

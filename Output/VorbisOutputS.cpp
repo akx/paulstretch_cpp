@@ -60,8 +60,7 @@ bool VorbisOutputS::newfile(string filename,int samplerate,REALTYPE quality){
     ogg_stream_packetin(&os,&header_comm);
     ogg_stream_packetin(&os,&header_code);
 
-    int eos=0;
-    while(!eos){
+    for(;;){
     	int result=ogg_stream_flush(&os,&og);
     	if(result==0)break;
 	int tmp=0;
@@ -113,9 +112,8 @@ void VorbisOutputS::write(int nsmps,REALTYPE *smpsl,REALTYPE *smpsr){
 	    while (!eos){
 	        int result=ogg_stream_pageout(&os,&og);
 		if(result==0)break;
-		int tmp;
-		tmp=fwrite(og.header,1,og.header_len,outfile);
-		tmp=fwrite(og.body,1,og.body_len,outfile);
+		fwrite(og.header,1,og.header_len,outfile);
+		fwrite(og.body,1,og.body_len,outfile);
 	  
 		if(ogg_page_eos(&og))eos=1;
 	    };

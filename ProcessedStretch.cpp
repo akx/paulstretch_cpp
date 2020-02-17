@@ -281,7 +281,6 @@ void ProcessedStretch::do_harmonics(REALTYPE *freq1,REALTYPE *freq2){
 	if (max<1e-8) max=1e-8;
 
 	for (int i=1;i<nfreq;i++){
-		REALTYPE c,s;
 		REALTYPE a=amp[i]/max;
 		if (!pars.harmonics.gauss) a=(a<0.368?0.0:1.0);
 		freq2[i]=freq1[i]*a;

@@ -526,7 +526,7 @@ bool Control::save_parameters(const char *filename){
 		xml->endbranch();
 	xml->endbranch();
 
-	int result=xml->saveXMLfile(filename);
+	xml->saveXMLfile(filename);
 	delete xml;
 	return true;
 };

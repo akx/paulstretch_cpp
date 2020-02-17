@@ -56,7 +56,6 @@ void Thread::stop(){
     if (!running) return;
     running=false;
     stopped=false;
-    int maxwait=1000;
     stopnow=true;
     while(!stopped){
 	sleep(10);

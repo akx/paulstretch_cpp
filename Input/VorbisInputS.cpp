@@ -93,7 +93,6 @@ int VorbisInputS::read(int nsmps,short int *smps){
     int current_section=0;
     int nsmps_todo=nsmps;
     int nsmps_done=0;
-    short int *smps_orig=smps;
     while (nsmps_todo>=0){
 	int chunk_size=(nsmps_todo<BUFSIZE)?nsmps_todo:BUFSIZE;
 	if (chunk_size==0) break;
