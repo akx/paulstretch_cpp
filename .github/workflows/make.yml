@@ -9,11 +9,11 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: install homebrew deps
       run: brew install audiofile fftw fltk libmxml libogg libsamplerate libvorbis mad portaudio
       if: runner.os == 'macOS'
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: install apt deps
       run: |
         sudo apt-get update
@@ -21,14 +21,14 @@ jobs:
       if: runner.os == 'Linux'
     - name: make
       run: make
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v3
       with:
         name: binary-${{ runner.os }}
         path: bin
     # -- bundling
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
-        python-version: '3.7'
+        python-version: '3.11'
       if: runner.os == 'macOS'
     - name: install appify and dmgbuild
       run: pip install dmgbuild -e git+https://github.com/akx/appify.git#egg=appify
@@ -39,7 +39,7 @@ jobs:
         mkdir ./dmg
         dmgbuild -s .github/workflows/dmgbuild_settings.py -D app=./bundle/Paulstretch.app "Paulstretch" ./dmg/Paulstretch.dmg
       if: runner.os == 'macOS'
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v3
       with:
         name: dmg-${{ runner.os }}
         path: dmg
